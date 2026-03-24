@@ -1,9 +1,9 @@
 ---
 name: price
-version: "1.0.0"
+version: "1.0.1"
 description: >
   Real-time market price data for 25,000+ assets across crypto, US stocks, Hong Kong stocks,
-  China A-shares, forex, ETFs, and global indices. Zero-delay, completely free.
+  China A-shares, forex, ETFs, commodities, and global indices. Zero-delay, completely free.
   Solves the #1 AI pain point: LLMs fabricating or hallucinating price data.
   Use when the user asks about any stock price, crypto price, exchange rate, or market data.
 tags: ["finance", "stocks", "crypto", "forex", "real-time", "market-data", "price"]
@@ -13,19 +13,22 @@ allowed-tools: Bash
 # Real-Time Market Price — Claude Code Skill
 
 > **The problem:** AI models frequently fabricate price data or cannot access real-time market information.
-> **The solution:** This skill provides instant access to live prices for 25,000+ assets worldwide, updated every few seconds.
+> **The solution:** This skill provides instant access to live prices for 25,000+ assets worldwide via Juglans Finance.
 
 ## Coverage
 
-| Market | Count | Update Frequency |
-|--------|-------|-----------------|
-| Crypto (OKX) | 1,100+ | Real-time WebSocket |
-| US Stocks (Polygon) | 9,000+ | Real-time WebSocket |
-| Hong Kong Stocks | 2,900+ | Every 10 seconds |
-| China A-Shares (SH+SZ) | 4,500+ | Every 10 seconds |
-| Global Indices | 6,900+ | Real-time WebSocket |
-| Forex | 12 major pairs | Every 10 seconds |
-| ETFs | 8 global ETFs | Every 10 seconds |
+| Market | Assets | Frequency |
+|--------|--------|-----------|
+| Crypto | 1,100+ tokens | Real-time |
+| US Stocks | 9,000+ tickers | Real-time |
+| Hong Kong Stocks | 2,900+ | Real-time |
+| China A-Shares (SH + SZ) | 4,500+ | Real-time |
+| Global Indices | 6,900+ | Real-time |
+| Forex | 50+ pairs (majors, crosses, EM) | Real-time |
+| ETFs | 39 (US + Global) | Real-time |
+| Commodities | Crude oil, gold, silver, copper, etc. | Real-time |
+
+**Total: 25,000+ assets. Powered by [Juglans Finance](https://finance.juglans.ai).**
 
 ## Commands
 
@@ -55,7 +58,7 @@ Use these rules to convert the user's symbol to the API format:
 **Hong Kong Stocks:**
 - `0700.HK`, `Tencent` → `HK_STOCK:0700@HKD_SPOT`
 - `9988.HK`, `Alibaba HK` → `HK_STOCK:9988@HKD_SPOT`
-- Pattern: `HK_STOCK:{NUMBER}@HKD_SPOT` (remove the `.HK` suffix and leading zeros if 4 digits)
+- Pattern: `HK_STOCK:{NUMBER}@HKD_SPOT` (remove `.HK` suffix)
 
 **China A-Shares:**
 - `600519.SS`, `Moutai` → `CN_STOCK:600519.SS@CNY_SPOT`
@@ -66,11 +69,13 @@ Use these rules to convert the user's symbol to the API format:
 - `DJI`, `Dow Jones` → `INDEX:DJI@USD_SPOT`
 - `SPX`, `S&P 500` → `INDEX:SPX@USD_SPOT`
 - `HSI`, `Hang Seng` → `INDEX:HSI@USD_SPOT`
+- `VIX` → `INDEX:VIX@USD_SPOT`
 - Pattern: `INDEX:{CODE}@USD_SPOT`
 
 **Forex:**
 - `EURUSD`, `EUR/USD` → `FOREX:EURUSD@USD_SPOT`
 - `USDJPY` → `FOREX:USDJPY@USD_SPOT`
+- `USDCNH`, `离岸人民币` → `FOREX:USDCNH@USD_SPOT`
 - `XAUUSD`, `Gold` → `FOREX:XAUUSD@USD_SPOT`
 - Pattern: `FOREX:{PAIR}@USD_SPOT`
 
@@ -92,7 +97,7 @@ Parse the JSON response and present it clearly:
    Change: +$3.21 (+1.29%)
    Volume: 45.2M
    Market Cap: $3.82T
-   Source: juglans-finance (real-time)
+   Source: Juglans Finance (real-time)
 ```
 
 If the API returns an error (`ticker not found`), tell the user the symbol may be incorrect and suggest alternatives.
@@ -107,7 +112,7 @@ If the API returns an error (`ticker not found`), tell the user the symbol may b
 | `GET /snapshot?assetClass={class}` | All prices for an asset class |
 | `GET /health` | Service health check |
 
-**Asset classes for snapshot:** `CRYPTO`, `US_STOCK`, `HK_STOCK`, `CN_STOCK`, `INDEX`, `ETF`, `FOREX`
+**Asset classes for snapshot:** `CRYPTO`, `US_STOCK`, `HK_STOCK`, `CN_STOCK`, `INDEX`, `ETF`, `FOREX`, `COMMODITY`
 
 **Response fields:**
 - `lastPrice` — Current price
@@ -123,7 +128,5 @@ If the API returns an error (`ticker not found`), tell the user the symbol may b
 
 - All prices are **real-time** during market hours. Outside market hours, the last closing price is shown.
 - Crypto prices are available **24/7**.
-- US stock prices update via WebSocket during NYSE/NASDAQ hours (9:30 AM - 4:00 PM ET).
-- HK and CN stock prices update every 10 seconds during trading hours.
 - **Never fabricate prices.** If the API doesn't return data, say so honestly.
-- Prices are provided by Juglans Finance — a free, open market data service.
+- All data provided by [Juglans Finance](https://finance.juglans.ai) — free, open, real-time market data.
