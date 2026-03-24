@@ -12,13 +12,18 @@ This skill gives Claude Code instant access to **live market prices** — update
 
 ### Coverage
 
-- **Crypto:** 1,100+ tokens (OKX WebSocket, real-time)
-- **US Stocks:** 9,000+ tickers (Polygon WebSocket, real-time)
-- **Hong Kong Stocks:** 2,900+ (FMP, 10s interval)
-- **China A-Shares:** 4,500+ (FMP, 10s interval)
-- **Global Indices:** 6,900+ (Polygon + FMP)
-- **Forex:** 12 major pairs
-- **ETFs:** Global ETFs
+| Market | Assets |
+|--------|--------|
+| Crypto | 1,100+ tokens |
+| US Stocks | 9,000+ tickers |
+| Hong Kong Stocks | 2,900+ |
+| China A-Shares (SH + SZ) | 4,500+ |
+| Global Indices | 6,900+ |
+| Forex | 50+ pairs |
+| ETFs | 39 (US + Global) |
+| Commodities | Crude oil, gold, silver, copper, etc. |
+
+**Total: 25,000+ assets. All real-time. Powered by [Juglans Finance](https://finance.juglans.ai).**
 
 ## Install
 
@@ -31,9 +36,9 @@ curl -fsSL https://raw.githubusercontent.com/juglans-ai/juglans-market-price/mai
 ### Manual install
 
 ```bash
-mkdir -p ~/.claude/skills/market-price
+mkdir -p ~/.claude/skills/price
 curl -fsSL https://raw.githubusercontent.com/juglans-ai/juglans-market-price/main/SKILL.md \
-  -o ~/.claude/skills/market-price/SKILL.md
+  -o ~/.claude/skills/price/SKILL.md
 ```
 
 ### ClawHub

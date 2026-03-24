@@ -1,10 +1,10 @@
 #!/bin/bash
 set -euo pipefail
 
-SKILL_DIR="${HOME}/.claude/skills/market-price"
-REPO_URL="https://raw.githubusercontent.com/juglans-ai/juglans-market-price/main"
+SKILL_DIR="${HOME}/.claude/skills/price"
+REPO_URL="https://raw.githubusercontent.com/juglans-ai/juglans-price/main"
 
-echo "Installing juglans-market-price skill..."
+echo "Installing juglans-price skill..."
 
 mkdir -p "$SKILL_DIR"
 curl -fsSL "$REPO_URL/SKILL.md" -o "$SKILL_DIR/SKILL.md"
