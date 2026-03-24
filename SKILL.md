@@ -1,5 +1,5 @@
 ---
-name: market-price
+name: price
 version: "1.0.0"
 description: >
   Real-time market price data for 25,000+ assets across crypto, US stocks, Hong Kong stocks,
